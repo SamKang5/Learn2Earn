@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
@@ -12,6 +11,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.learn2earn2.R
 import com.example.learn2earn2.account.ParentAccount
 import com.example.learn2earn2.account.ParentAccountActivity
+import com.example.learn2earn2.child.ChildMainActivity
 
 class RoleSelectionActivity : AppCompatActivity() {
 
@@ -33,8 +33,10 @@ class RoleSelectionActivity : AppCompatActivity() {
             if (savedRole == ROLE_PARENT && !ParentAccount.isReady(this)) {
                 startActivity(Intent(this, ParentAccountActivity::class.java))
                 finish()
-                return
+            } else {
+                navigateToMain(savedRole)
             }
+            return
         }
 
         setContentView(R.layout.activity_role_selection)
@@ -63,7 +65,19 @@ class RoleSelectionActivity : AppCompatActivity() {
             startActivity(Intent(this, ParentAccountActivity::class.java))
             finish()
         } else {
-            Toast.makeText(this, "Selected $role mode", Toast.LENGTH_SHORT).show()
+            navigateToMain(role)
         }
+    }
+
+    private fun navigateToMain(role: String) {
+        val intent = if (role == ROLE_PARENT) {
+            Intent(this, ParentAccountActivity::class.java)
+        } else {
+            Intent(this, ChildMainActivity::class.java)
+        }.apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        startActivity(intent)
+        finish()
     }
 }
