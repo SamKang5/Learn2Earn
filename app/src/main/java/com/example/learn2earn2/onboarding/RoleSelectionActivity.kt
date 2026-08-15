@@ -12,6 +12,7 @@ import com.example.learn2earn2.R
 import com.example.learn2earn2.account.ParentAccount
 import com.example.learn2earn2.account.ParentAccountActivity
 import com.example.learn2earn2.child.ChildMainActivity
+import com.example.learn2earn2.parent.ParentMainActivity
 
 class RoleSelectionActivity : AppCompatActivity() {
 
@@ -70,11 +71,13 @@ class RoleSelectionActivity : AppCompatActivity() {
     }
 
     private fun navigateToMain(role: String) {
-        val intent = if (role == ROLE_PARENT) {
-            Intent(this, ParentAccountActivity::class.java)
+        val targetClass = if (role == ROLE_PARENT) {
+            ParentMainActivity::class.java
         } else {
-            Intent(this, ChildMainActivity::class.java)
-        }.apply {
+            ChildMainActivity::class.java
+        }
+
+        val intent = Intent(this, targetClass).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         startActivity(intent)
