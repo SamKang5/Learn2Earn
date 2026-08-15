@@ -1,4 +1,4 @@
-package com.example.learn2earn.onboarding
+package com.example.learn2earn2.onboarding
 
 import android.content.Context
 import android.content.Intent
@@ -8,11 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.learn2earn.R
-import com.example.learn2earn.account.ParentAccount
-import com.example.learn2earn.account.ParentAccountActivity
-import com.example.learn2earn.child.ChildMainActivity
-import com.example.learn2earn.parent.ParentMainActivity
+import com.example.learn2earn2.R
+import com.example.learn2earn2.account.ParentAccount
+import com.example.learn2earn2.account.ParentAccountActivity
+import com.example.learn2earn2.child.ChildMainActivity
+import com.example.learn2earn2.parent.ParentMainActivity
 
 class RoleSelectionActivity : AppCompatActivity() {
 

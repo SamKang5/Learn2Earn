@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.learn2earn"
+    namespace = "com.example.learn2earn2"
     compileSdk = 37
 
     defaultConfig {

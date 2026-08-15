@@ -1,4 +1,4 @@
-package com.example.learn2earn.ui
+package com.example.learn2earn2.ui
 
 import android.graphics.Rect
 import android.view.MotionEvent
