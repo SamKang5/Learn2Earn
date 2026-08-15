@@ -54,11 +54,7 @@ class ParentMainActivity : AppCompatActivity() {
             val fragment = when (item.itemId) {
                 R.id.nav_devices -> DevicesFragment()
                 R.id.nav_quizzes -> QuizFragment()
-                R.id.nav_progress -> try {
-                    Class.forName("com.example.learn2earn2.parent.ProgressFragment").getDeclaredConstructor().newInstance() as Fragment
-                } catch (e: Exception) {
-                    DevicesFragment()
-                }
+                R.id.nav_progress -> ProgressFragment()
                 R.id.nav_emergency_contacts -> {
                     startActivity(Intent(this, EmergencyContactsActivity::class.java))
                     @Suppress("DEPRECATION")

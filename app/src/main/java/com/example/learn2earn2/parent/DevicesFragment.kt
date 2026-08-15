@@ -179,22 +179,16 @@ class DevicesFragment : Fragment() {
             },
             onConfigureLearningPlan = { child ->
                 child.authUid?.takeIf { it.isNotBlank() }?.let { childUid ->
-                    val intent = Intent().setClassName(requireContext(), "com.example.learn2earn2.parent.LearningPlanActivity")
-                        .putExtra("child_uid", childUid)
-                        .putExtra("child_name", child.name)
-                    if (requireContext().packageManager.resolveActivity(intent, 0) != null) {
-                        startActivity(intent)
-                    }
+                    startActivity(Intent(requireContext(), LearningPlanActivity::class.java)
+                        .putExtra(LearningPlanActivity.EXTRA_CHILD_UID, childUid)
+                        .putExtra(LearningPlanActivity.EXTRA_CHILD_NAME, child.name))
                 }
             },
             onAssignQuizzes = { child ->
                 child.authUid?.takeIf { it.isNotBlank() }?.let { childUid ->
-                    val intent = Intent().setClassName(requireContext(), "com.example.learn2earn2.parent.ChildQuizAssignmentActivity")
-                        .putExtra("child_uid", childUid)
-                        .putExtra("child_name", child.name)
-                    if (requireContext().packageManager.resolveActivity(intent, 0) != null) {
-                        startActivity(intent)
-                    }
+                    startActivity(Intent(requireContext(), ChildQuizAssignmentActivity::class.java)
+                        .putExtra(ChildQuizAssignmentActivity.EXTRA_CHILD_UID, childUid)
+                        .putExtra(ChildQuizAssignmentActivity.EXTRA_CHILD_NAME, child.name))
                 }
             },
             onResumeTimer = { child ->

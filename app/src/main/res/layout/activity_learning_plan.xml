@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/l2e_surface" android:fillViewport="true">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:padding="20dp">
+        <Button android:id="@+id/btn_close_learning_plan" style="@style/L2E.Button"
+            android:layout_width="wrap_content" android:layout_height="42dp" android:background="@drawable/bg_btn_ghost"
+            android:text="Close" android:textColor="@color/l2e_forest" />
+        <TextView android:id="@+id/tv_learning_plan_title" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="18dp" android:textColor="@color/l2e_ink" android:textSize="27sp" android:textStyle="bold" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp"
+            android:text="Choose what to generate and reward. Changes apply to future quizzes." android:textColor="@color/l2e_muted" android:textSize="14sp" />
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="24dp"
+            android:text="CHILD PROFILE" android:textColor="@color/l2e_forest" android:textSize="12sp" android:textStyle="bold" />
+        <Spinner android:id="@+id/sp_plan_grade" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" />
+        <Button android:id="@+id/btn_plan_subjects" style="@style/L2E.Button" android:layout_width="match_parent" android:layout_height="52dp"
+            android:layout_marginTop="10dp" android:background="@drawable/bg_btn_secondary" android:text="Choose subjects" android:textColor="@color/l2e_forest" />
+        <EditText android:id="@+id/et_plan_other_subjects" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" android:background="@drawable/bg_tactile_input" android:hint="Other subjects, separated by commas" android:padding="14dp" android:visibility="gone" />
+        <EditText android:id="@+id/et_plan_curriculum" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp"
+            android:background="@drawable/bg_tactile_input" android:gravity="top" android:hint="Curriculum notes (optional)" android:inputType="textMultiLine" android:minLines="3" android:padding="14dp" />
+        <EditText android:id="@+id/et_plan_strengths" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp"
+            android:background="@drawable/bg_tactile_input" android:hint="Strengths (optional)" android:padding="14dp" />
+        <EditText android:id="@+id/et_plan_weak_areas" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp"
+            android:background="@drawable/bg_tactile_input" android:hint="Weak areas to practise (optional)" android:padding="14dp" />
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="24dp" android:text="QUIZ REFILL" android:textColor="@color/l2e_forest" android:textSize="12sp" android:textStyle="bold" />
+        <Button android:id="@+id/btn_plan_difficulties" style="@style/L2E.Button" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="10dp" android:background="@drawable/bg_btn_secondary" android:textColor="@color/l2e_forest" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Each new AI quiz uses one selected difficulty at random." android:textColor="@color/l2e_muted" android:textSize="12sp" />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:orientation="horizontal">
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Keep ready" android:textColor="@color/l2e_ink" /><NumberPicker android:id="@+id/np_plan_minimum_available" android:layout_width="match_parent" android:layout_height="wrap_content" /></LinearLayout>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="12dp" android:layout_weight="1" android:orientation="vertical"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Make each time" android:textColor="@color/l2e_ink" /><NumberPicker android:id="@+id/np_plan_refill_count" android:layout_width="match_parent" android:layout_height="wrap_content" /></LinearLayout>
+        </LinearLayout>
+        <androidx.appcompat.widget.SwitchCompat android:id="@+id/switch_plan_auto_assign" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="Auto-assign generated quizzes" android:textColor="@color/l2e_ink" />
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="24dp" android:text="REWARD DEFAULTS" android:textColor="@color/l2e_forest" android:textSize="12sp" android:textStyle="bold" />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:orientation="horizontal">
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pass score %" android:textColor="@color/l2e_ink" /><NumberPicker android:id="@+id/np_plan_passing_score" android:layout_width="match_parent" android:layout_height="wrap_content" /></LinearLayout>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="12dp" android:layout_weight="1" android:orientation="vertical"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Reward minutes" android:textColor="@color/l2e_ink" /><NumberPicker android:id="@+id/np_plan_reward_minutes" android:layout_width="match_parent" android:layout_height="wrap_content" /></LinearLayout>
+        </LinearLayout>
+        <LinearLayout android:id="@+id/ll_plan_reward_tiers" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" />
+        <Button android:id="@+id/btn_add_plan_reward_tier" style="@style/L2E.Button" android:layout_width="wrap_content" android:layout_height="42dp" android:layout_marginTop="10dp" android:background="@drawable/bg_btn_secondary" android:text="Add reward tier" android:textColor="@color/l2e_forest" />
+        <TextView android:id="@+id/tv_learning_plan_status" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="18dp" android:textColor="@color/l2e_muted" />
+        <Button android:id="@+id/btn_save_learning_plan" style="@style/L2E.Button" android:layout_width="match_parent" android:layout_height="54dp" android:layout_marginTop="10dp" android:background="@drawable/bg_btn_primary" android:text="Save learning plan" android:textColor="@color/white" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="28dp" android:text="QUIZZES WAITING FOR REVIEW" android:textColor="@color/l2e_forest" android:textSize="12sp" android:textStyle="bold" />
+        <LinearLayout android:id="@+id/ll_learning_plan_drafts" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:layout_marginBottom="24dp" android:orientation="vertical" />
+    </LinearLayout>
+</ScrollView>
