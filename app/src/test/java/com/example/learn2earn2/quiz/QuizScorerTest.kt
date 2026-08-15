@@ -29,6 +29,14 @@ class QuizScorerTest {
     }
 
     @Test
+    fun handlesEmptyAnswersGracefully() {
+        val score = QuizScorer.score(emptyList())
+        assertEquals(0, score.correctQuestions)
+        assertEquals(0, score.totalQuestions)
+        assertEquals(0, score.percent)
+    }
+
+    @Test
     fun rewardPolicyKeepsOnlySupportedRepeatCadences() {
         assertEquals(1_440, QuizRewardPolicy(repeatIntervalMinutes = 1_440).normalized().repeatIntervalMinutes)
         assertEquals(-1, QuizRewardPolicy(repeatIntervalMinutes = 17).normalized().repeatIntervalMinutes)

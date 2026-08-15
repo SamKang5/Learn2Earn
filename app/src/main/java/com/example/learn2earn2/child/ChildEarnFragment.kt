@@ -384,7 +384,13 @@ class ChildEarnFragment : Fragment(R.layout.fragment_child_earn) {
         }
 
     private fun openQuiz(item: CatalogItem, review: Boolean) {
-        Toast.makeText(requireContext(), "Opening quiz ${item.title}", Toast.LENGTH_SHORT).show()
+        startActivity(
+            android.content.Intent(requireContext(), ChildQuizActivity::class.java).apply {
+                putExtra(ChildQuizActivity.EXTRA_QUIZ_ID, item.id)
+                putExtra(ChildQuizActivity.EXTRA_SECURE_ASSIGNMENT, item.secure)
+                putExtra(ChildQuizActivity.EXTRA_REVIEW, review)
+            }
+        )
     }
 
     private fun showEmpty(message: String) {
