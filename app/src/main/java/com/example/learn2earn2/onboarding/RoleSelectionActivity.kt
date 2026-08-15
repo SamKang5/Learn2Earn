@@ -1,6 +1,7 @@
 package com.example.learn2earn2.onboarding
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -9,6 +10,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.learn2earn2.R
+import com.example.learn2earn2.account.ParentAccount
+import com.example.learn2earn2.account.ParentAccountActivity
 
 class RoleSelectionActivity : AppCompatActivity() {
 
@@ -22,6 +25,18 @@ class RoleSelectionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Check if role is already selected
+        val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val savedRole = prefs.getString(KEY_ROLE, null)
+
+        if (savedRole != null) {
+            if (savedRole == ROLE_PARENT && !ParentAccount.isReady(this)) {
+                startActivity(Intent(this, ParentAccountActivity::class.java))
+                finish()
+                return
+            }
+        }
+
         setContentView(R.layout.activity_role_selection)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         val content = findViewById<View>(android.R.id.content)
@@ -33,17 +48,22 @@ class RoleSelectionActivity : AppCompatActivity() {
         ViewCompat.requestApplyInsets(content)
 
         findViewById<View>(R.id.card_parent).setOnClickListener {
-            saveRole(ROLE_PARENT)
+            saveRoleAndNavigate(ROLE_PARENT)
         }
 
         findViewById<View>(R.id.card_child).setOnClickListener {
-            saveRole(ROLE_CHILD)
+            saveRoleAndNavigate(ROLE_CHILD)
         }
     }
 
-    private fun saveRole(role: String) {
+    private fun saveRoleAndNavigate(role: String) {
         val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         prefs.edit().putString(KEY_ROLE, role).apply()
-        Toast.makeText(this, "Selected $role mode", Toast.LENGTH_SHORT).show()
+        if (role == ROLE_PARENT) {
+            startActivity(Intent(this, ParentAccountActivity::class.java))
+            finish()
+        } else {
+            Toast.makeText(this, "Selected $role mode", Toast.LENGTH_SHORT).show()
+        }
     }
 }
