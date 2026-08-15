@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:gravity="bottom" android:orientation="horizontal">
+    <EditText android:id="@+id/et_tier_score" android:layout_width="0dp" android:layout_height="52dp" android:layout_weight="1" android:background="@drawable/bg_tactile_input" android:hint="Score %" android:inputType="number" android:maxLength="3" android:paddingStart="16dp" android:paddingEnd="16dp" />
+    <EditText android:id="@+id/et_tier_minutes" android:layout_width="0dp" android:layout_height="52dp" android:layout_marginStart="12dp" android:layout_weight="1" android:background="@drawable/bg_tactile_input" android:hint="Minutes" android:inputType="number" android:maxLength="3" android:paddingStart="16dp" android:paddingEnd="16dp" />
+    <ImageButton android:id="@+id/btn_remove_reward_tier" android:layout_width="44dp" android:layout_height="52dp" android:layout_marginStart="8dp" android:background="@drawable/bg_btn_ghost" android:contentDescription="Remove reward tier" android:src="@drawable/ic_delete_small" app:tint="@color/l2e_danger" />
+</LinearLayout>
