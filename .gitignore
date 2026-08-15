@@ -13,3 +13,10 @@
 .externalNativeBuild
 .cxx
 local.properties
+.agents
+node_modules/
+.expo/
+.expo-shared/
+.kotlin/
+ai-backend/.dev.vars*
+ai-backend/.wrangler/
