@@ -748,7 +748,9 @@ class ChildLockService : Service() {
         childActivityLaunchDeadline = System.currentTimeMillis() + CHILD_ACTIVITY_LAUNCH_GRACE_MS
         ForegroundAppTracker.update(packageName)
         hideOverlay()
-        Toast.makeText(this, "Emergency call requested", Toast.LENGTH_SHORT).show()
+        startActivity(Intent(this, com.example.learn2earn2.emergency.EmergencyCallActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        })
     }
 
     private fun hasActiveLocalPairing(): Boolean =

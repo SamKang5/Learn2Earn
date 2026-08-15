@@ -141,7 +141,7 @@ class ParentApprovalActivity : AppCompatActivity() {
     }
 
     private fun openEmergencyContactSettings() {
-        Toast.makeText(this, "Emergency contacts settings", Toast.LENGTH_SHORT).show()
+        startActivity(Intent(this, com.example.learn2earn2.emergency.EmergencyContactsActivity::class.java))
         finish()
     }
 
