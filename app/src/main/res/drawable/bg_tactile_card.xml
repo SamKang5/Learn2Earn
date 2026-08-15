@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Solid black shadow -->
+    <item android:left="8dp" android:top="8dp">
+        <shape>
+            <solid android:color="#000000" />
+            <corners android:radius="14dp" />
+        </shape>
+    </item>
+
+    <!-- Card face -->
+    <item android:right="8dp" android:bottom="8dp">
+        <shape>
+            <solid android:color="#FFFFFF" />
+            <stroke android:width="3dp" android:color="#000000" />
+            <corners android:radius="14dp" />
+            <padding android:left="20dp" android:top="20dp" android:right="20dp" android:bottom="20dp" />
+        </shape>
+    </item>
+</layer-list>
