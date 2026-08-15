@@ -8,76 +8,86 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="24dp">
+        android:paddingStart="24dp"
+        android:paddingTop="20dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="32dp">
 
-        <LinearLayout
+        <!-- Top Navigation Header -->
+        <FrameLayout
+            android:id="@+id/parent_nav_header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/btn_reset_role"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_gravity="start|center_vertical"
+                android:background="@drawable/bg_btn_secondary"
+                android:contentDescription="Return to role selection"
+                android:padding="10dp"
+                android:src="@drawable/ic_arrow_back"
+                android:stateListAnimator="@animator/press_scale" />
 
             <TextView
-                android:id="@+id/tv_account_app_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:focusable="true"
-                android:fontFamily="serif"
-                android:text="Learn2Earn"
-                android:contentDescription="Learn2Earn credits"
-                android:textColor="@color/l2e_ink"
-                android:textSize="36sp" />
-
-            <Button
-                android:id="@+id/btn_reset_role"
-                style="@style/L2E.Button"
+                android:id="@+id/tv_role_badge"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:background="@drawable/bg_btn_secondary"
-                android:backgroundTint="@null"
-                android:paddingStart="14dp"
-                android:paddingEnd="14dp"
-                android:text="Switch user"
-                android:textColor="@color/l2e_ink"
-                android:textSize="12sp" />
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:background="@drawable/bg_role_badge"
+                android:fontFamily="sans-serif-medium"
+                android:letterSpacing="0.04"
+                android:paddingStart="12dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="6dp"
+                android:text="PARENT"
+                android:textColor="@color/l2e_forest"
+                android:textSize="11sp" />
+        </FrameLayout>
 
+        <!-- Clean Headline & Subtitle -->
         <TextView
             android:id="@+id/tv_account_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="32dp"
             android:fontFamily="serif"
             android:text="Welcome back"
             android:textColor="@color/l2e_ink"
-            android:textSize="28sp" />
+            android:textSize="32sp" />
 
         <TextView
+            android:id="@+id/tv_account_subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Sign in to keep your quizzes, paired devices, and settings together across your parent phones."
+            android:layout_marginTop="6dp"
+            android:text="Sign in to manage devices and quizzes"
             android:textColor="@color/l2e_muted"
             android:textSize="15sp" />
 
+        <!-- Input Fields -->
         <EditText
             android:id="@+id/et_account_email"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:layout_marginTop="28dp"
             android:background="@drawable/bg_tactile_input"
             android:hint="Email"
             android:inputType="textEmailAddress"
-            android:padding="16dp" />
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:textColor="@color/l2e_ink"
+            android:textColorHint="@color/l2e_muted"
+            android:textSize="16sp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_account_password"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:layout_marginTop="12dp"
             android:background="@drawable/bg_tactile_input"
             android:padding="0dp"
@@ -88,17 +98,21 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_account_password"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:hint="Password"
                 android:inputType="textPassword"
-                android:padding="16dp" />
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp"
+                android:textColor="@color/l2e_ink"
+                android:textColorHint="@color/l2e_muted"
+                android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_account_confirm_password"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:layout_marginTop="12dp"
             android:background="@drawable/bg_tactile_input"
             android:padding="0dp"
@@ -110,53 +124,85 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_account_confirm_password"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:hint="Confirm password"
                 android:inputType="textPassword"
-                android:padding="16dp" />
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp"
+                android:textColor="@color/l2e_ink"
+                android:textColorHint="@color/l2e_muted"
+                android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Primary Action -->
         <Button
             android:id="@+id/btn_account_continue"
             style="@style/L2E.Button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="54dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/bg_btn_primary"
             android:backgroundTint="@null"
             android:text="Sign in"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
+        <!-- Toggle Mode Link -->
         <TextView
             android:id="@+id/tv_account_toggle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="16dp"
             android:clickable="true"
             android:focusable="true"
+            android:gravity="center"
+            android:padding="8dp"
             android:text="New here? Create an account"
             android:textColor="@color/l2e_forest"
-            android:textSize="15sp" />
+            android:textSize="14sp" />
 
+        <!-- Divider -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="@color/l2e_outline" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="or"
+                android:textColor="@color/l2e_muted"
+                android:textSize="13sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="@color/l2e_outline" />
+        </LinearLayout>
+
+        <!-- Guest Action -->
         <Button
             android:id="@+id/btn_continue_guest"
             style="@style/L2E.Button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
+            android:layout_height="54dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/bg_btn_secondary"
             android:backgroundTint="@null"
             android:text="Continue as guest"
-            android:textColor="@color/l2e_ink" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="Guest mode includes 3 AI quiz drafts. Create an account to keep using AI."
-            android:textColor="@color/l2e_muted"
-            android:textSize="13sp" />
+            android:textColor="@color/l2e_ink"
+            android:textSize="15sp" />
     </LinearLayout>
 </ScrollView>

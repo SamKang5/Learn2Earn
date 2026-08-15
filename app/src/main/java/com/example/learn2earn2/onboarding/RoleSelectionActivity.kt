@@ -70,6 +70,8 @@ class RoleSelectionActivity : AppCompatActivity() {
         }
     }
 
+
+    
     private fun navigateToMain(role: String) {
         val targetClass = if (role == ROLE_PARENT) {
             ParentMainActivity::class.java

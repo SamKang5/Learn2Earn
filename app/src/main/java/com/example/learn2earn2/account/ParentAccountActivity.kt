@@ -47,7 +47,7 @@ class ParentAccountActivity : KeyboardDismissActivity() {
             insets
         }
 
-        findViewById<TextView>(R.id.tv_account_app_title)?.setOnClickListener { AppCredits.show(this) }
+        findViewById<TextView>(R.id.tv_role_badge)?.setOnClickListener { AppCredits.show(this) }
         findViewById<View>(R.id.btn_reset_role)?.setOnClickListener { returnToRoleSelection() }
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
@@ -85,7 +85,8 @@ class ParentAccountActivity : KeyboardDismissActivity() {
         registering = !registering
         confirmPasswordContainer.visibility = if (registering) View.VISIBLE else View.GONE
         if (!registering) confirmPassword.text.clear()
-        findViewById<TextView>(R.id.tv_account_title).text = if (registering) "Create parent account" else "Welcome back"
+        findViewById<TextView>(R.id.tv_account_title).text = if (registering) "Create account" else "Welcome back"
+        findViewById<TextView>(R.id.tv_account_subtitle).text = if (registering) "Set up your parent dashboard" else "Sign in to manage devices and quizzes"
         continueButton.text = if (registering) "Create account" else "Sign in"
         findViewById<TextView>(R.id.tv_account_toggle).text = if (registering) "Already have an account? Sign in" else "New here? Create an account"
     }
