@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Learn2Earn2</string>
+    <string name="app_name">Learn2Earn</string>
     <string name="ai_quiz_api_url">https://learn2earn-ai.pages.dev/api/generate-quiz</string>
     <string name="learning_api_url">https://learn2earn-ai.pages.dev/api/learning</string>
     <string name="link_to_parent">Link to parent</string>

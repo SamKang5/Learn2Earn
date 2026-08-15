@@ -1,18 +1,14 @@
 package com.example.learn2earn2.onboarding
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.learn2earn2.R
-import com.example.learn2earn2.account.ParentAccount
-import com.example.learn2earn2.account.ParentAccountActivity
-import com.example.learn2earn2.child.ChildMainActivity
-import com.example.learn2earn2.parent.ParentMainActivity
 
 class RoleSelectionActivity : AppCompatActivity() {
 
@@ -26,20 +22,6 @@ class RoleSelectionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Check if role is already selected
-        val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val savedRole = prefs.getString(KEY_ROLE, null)
-
-        if (savedRole != null) {
-            if (savedRole == ROLE_PARENT && !ParentAccount.isReady(this)) {
-                startActivity(Intent(this, ParentAccountActivity::class.java))
-                finish()
-            } else {
-                navigateToMain(savedRole)
-            }
-            return
-        }
-
         setContentView(R.layout.activity_role_selection)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         val content = findViewById<View>(android.R.id.content)
@@ -51,36 +33,17 @@ class RoleSelectionActivity : AppCompatActivity() {
         ViewCompat.requestApplyInsets(content)
 
         findViewById<View>(R.id.card_parent).setOnClickListener {
-            saveRoleAndNavigate(ROLE_PARENT)
+            saveRole(ROLE_PARENT)
         }
 
         findViewById<View>(R.id.card_child).setOnClickListener {
-            saveRoleAndNavigate(ROLE_CHILD)
+            saveRole(ROLE_CHILD)
         }
     }
 
-    private fun saveRoleAndNavigate(role: String) {
+    private fun saveRole(role: String) {
         val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         prefs.edit().putString(KEY_ROLE, role).apply()
-        if (role == ROLE_PARENT) {
-            startActivity(Intent(this, ParentAccountActivity::class.java))
-            finish()
-        } else {
-            navigateToMain(role)
-        }
-    }
-
-    private fun navigateToMain(role: String) {
-        val targetClass = if (role == ROLE_PARENT) {
-            ParentMainActivity::class.java
-        } else {
-            ChildMainActivity::class.java
-        }
-
-        val intent = Intent(this, targetClass).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-        startActivity(intent)
-        finish()
+        Toast.makeText(this, "Selected $role mode", Toast.LENGTH_SHORT).show()
     }
 }

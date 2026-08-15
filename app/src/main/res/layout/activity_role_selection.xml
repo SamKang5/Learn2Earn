@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="serif"
-            android:text="Learn2Earn2"
+            android:text="Learn2Earn"
             android:textColor="@color/l2e_ink"
             android:textSize="40sp" />
 
