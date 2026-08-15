@@ -1,0 +1,64 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "pairing_codes": {
+      "$code": {
+        ".read": "auth != null",
+        ".write": "auth != null && ((data.exists() && data.child('parentUid').val() == auth.uid && !newData.exists()) || (data.exists() && data.child('claimedBy').val() == auth.uid && !newData.exists()) || (!data.exists() && newData.child('parentUid').val() == auth.uid && newData.child('expiresAt').isNumber()) || (data.exists() && data.child('expiresAt').val() >= now && (!data.child('claimedBy').exists() || data.child('claimedBy').val() == auth.uid) && newData.child('claimedBy').val() == auth.uid && newData.child('parentUid').val() == data.child('parentUid').val() && newData.child('expiresAt').val() == data.child('expiresAt').val() && newData.child('secureLearning').val() == data.child('secureLearning').val() && ((!data.child('guestApprovalHash').exists() && !newData.child('guestApprovalHash').exists()) || newData.child('guestApprovalHash').val() == data.child('guestApprovalHash').val()) && ((!data.child('createdAt').exists() && !newData.child('createdAt').exists()) || newData.child('createdAt').val() == data.child('createdAt').val())))",
+        ".validate": "!newData.exists() || ($code.matches(/^[A-HJ-NP-Z2-9]{6}$/) && newData.hasChildren(['parentUid', 'expiresAt', 'secureLearning']) && newData.child('parentUid').isString() && newData.child('expiresAt').isNumber() && newData.child('secureLearning').isBoolean() && (!newData.child('createdAt').exists() || newData.child('createdAt').isNumber()) && (!newData.child('claimedBy').exists() || newData.child('claimedBy').isString()))",
+        "parentUid": {
+          ".validate": "newData.isString()"
+        },
+        "expiresAt": {
+          ".validate": "newData.isNumber()"
+        },
+        "createdAt": {
+          ".validate": "newData.isNumber()"
+        },
+        "secureLearning": {
+          ".validate": "newData.isBoolean()"
+        },
+        "claimedBy": {
+          ".validate": "newData.isString()"
+        },
+        "guestApprovalHash": {
+          ".validate": "newData.isString()"
+        },
+        "$other": {
+          ".validate": false
+        }
+      }
+    },
+    "users": {
+      "$parentId": {
+        ".read": "auth != null && auth.uid == $parentId",
+        ".write": "auth != null && auth.uid == $parentId",
+        "quizzes": {
+          ".read": "auth != null && (auth.uid == $parentId || (root.child('users').child($parentId).child('children').child(auth.uid).child('authUid').val() == auth.uid && root.child('users').child($parentId).child('children').child(auth.uid).child('secureLearningEnabled').val() == false))"
+        },
+        "children": {
+          "$childId": {
+            ".read": "auth != null && (auth.uid == $parentId || auth.uid == $childId || data.child('authUid').val() == auth.uid)",
+            ".write": "auth != null && (auth.uid == $parentId || (!data.exists() && auth.uid == $childId && newData.child('authUid').val() == auth.uid && newData.child('pairingCode').isString() && newData.child('secureLearningEnabled').isBoolean() && newData.child('secureLearningEnabled').val() == root.child('pairing_codes').child(newData.child('pairingCode').val()).child('secureLearning').val() && root.child('pairing_codes').child(newData.child('pairingCode').val()).child('parentUid').val() == $parentId && root.child('pairing_codes').child(newData.child('pairingCode').val()).child('claimedBy').val() == auth.uid && root.child('pairing_codes').child(newData.child('pairingCode').val()).child('expiresAt').val() >= now))",
+            "authUid": {
+              ".write": "auth != null && auth.uid == $parentId"
+            },
+            "installedApps": {
+              ".write": "auth != null && root.child('users').child($parentId).child('children').child($childId).exists() && (auth.uid == $childId || root.child('users').child($parentId).child('children').child($childId).child('authUid').val() == auth.uid)"
+            },
+            "runtime": {
+              ".write": "auth != null && root.child('users').child($parentId).child('children').child($childId).exists() && (auth.uid == $childId || root.child('users').child($parentId).child('children').child($childId).child('authUid').val() == auth.uid)"
+            },
+            "timeCommandAcks": {
+              ".write": "auth != null && root.child('users').child($parentId).child('children').child($childId).exists() && (auth.uid == $childId || root.child('users').child($parentId).child('children').child($childId).child('authUid').val() == auth.uid)"
+            },
+            "quizProgress": {
+              ".write": "auth != null && root.child('users').child($parentId).child('children').child($childId).exists() && (auth.uid == $childId || root.child('users').child($parentId).child('children').child($childId).child('authUid').val() == auth.uid)"
+            }
+          }
+        }
+      }
+    }
+  }
+}

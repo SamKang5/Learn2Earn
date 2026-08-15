@@ -1,0 +1,17 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "learn2earn-learning-plans",
+  "main": "src/learning-plan-worker-entry.ts",
+  "compatibility_date": "2026-07-25",
+  "compatibility_flags": ["nodejs_compat"],
+  "triggers": { "crons": ["*/15 * * * *"] },
+  "observability": { "enabled": true, "head_sampling_rate": 1 },
+  "d1_databases": [
+    {
+      "binding": "AI_QUOTA_DB",
+      "database_name": "learn2earn-ai-quota",
+      "database_id": "e6acd8da-36f4-4f35-a85d-26c04f1eb4c9",
+      "migrations_dir": "migrations"
+    }
+  ]
+}
