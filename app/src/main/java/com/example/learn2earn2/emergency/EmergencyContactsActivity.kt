@@ -1,4 +1,4 @@
-package com.example.learn2earn2.emergency
+﻿package com.example.learn2earn2.emergency
 
 import android.Manifest
 import android.app.Activity
@@ -31,6 +31,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.learn2earn2.R
 import com.example.learn2earn2.account.ParentAccount
 import com.example.learn2earn2.onboarding.RoleSelectionActivity
+import com.example.learn2earn2.parent.ParentMainActivity
+import com.example.learn2earn2.parent.ParentMainActivity.Companion.EXTRA_PARENT_TAB
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.UUID
 
@@ -196,26 +198,33 @@ class EmergencyContactsActivity : AppCompatActivity() {
     }
 
     private fun createBottomNavigation(): BottomNavigationView = BottomNavigationView(this).apply {
-        layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            64.dp()
-        )
-        setBackgroundColor(getColor(R.color.l2e_surface))
-        itemIconTintList = ContextCompat.getColorStateList(context, R.color.l2e_forest)
-        itemTextColor = ContextCompat.getColorStateList(context, R.color.l2e_forest)
-        labelVisibilityMode = BottomNavigationView.LABEL_VISIBILITY_LABELED
-        inflateMenu(R.menu.parent_nav_menu)
-        selectedItemId = R.id.nav_emergency_contacts
-        setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_emergency_contacts -> true
-                else -> {
-                    finish()
-                    true
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                64.dp()
+            )
+            setBackgroundColor(getColor(R.color.l2e_surface))
+            itemIconTintList = ContextCompat.getColorStateList(context, R.color.l2e_forest)
+            itemTextColor = ContextCompat.getColorStateList(context, R.color.l2e_forest)
+            labelVisibilityMode = BottomNavigationView.LABEL_VISIBILITY_LABELED
+            inflateMenu(R.menu.parent_nav_menu)
+            selectedItemId = R.id.nav_emergency_contacts
+            setOnItemSelectedListener { item ->
+                when (item.itemId) {
+                    R.id.nav_emergency_contacts -> true
+                    R.id.nav_devices, R.id.nav_quizzes, R.id.nav_progress -> {
+                        startActivity(Intent(this@EmergencyContactsActivity, ParentMainActivity::class.java).apply {
+                            putExtra(EXTRA_PARENT_TAB, item.itemId)
+                            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                        })
+                        finish()
+                        @Suppress("DEPRECATION")
+                        overridePendingTransition(0, 0)
+                        true
+                    }
+                    else -> false
                 }
             }
         }
-    }
 
     private fun resetRole() {
         ParentAccount.clear(this)

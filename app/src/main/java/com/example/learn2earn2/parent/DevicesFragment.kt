@@ -1,4 +1,4 @@
-package com.example.learn2earn2.parent
+﻿package com.example.learn2earn2.parent
 
 import android.os.Bundle
 import android.app.Dialog
@@ -140,6 +140,8 @@ class DevicesFragment : Fragment() {
                             ) &&
                             isAdded
                         ) {
+                            // Never leave a parent unable to remove a child because the optional
+                            // service is temporarily unavailable (or that child switched users).
                             db.getReference("users/$parentDeviceId/pendingSecureUnpairs/$authUid")
                                 .setValue(true)
                             Toast.makeText(requireContext(), "Device unlinked. Secure cleanup will retry.", Toast.LENGTH_LONG).show()
@@ -233,6 +235,8 @@ class DevicesFragment : Fragment() {
                     "seconds" to seconds,
                     "createdAt" to com.google.firebase.database.ServerValue.TIMESTAMP
                 )
+                // Show the parent's requested value immediately. The child clears this
+                // preview only after it has applied this exact queued command.
                 ref.child(child.id).updateChildren(
                     mapOf(
                         "timeCommands/$commandId" to command,
@@ -270,6 +274,8 @@ class DevicesFragment : Fragment() {
                     child.authUid?.takeIf { it.isNotBlank() }?.let { authUid ->
                         LearningApi.setRewardPolicy(requireContext(), authUid, rewardCapMinutes) { result ->
                             if (result is LearningApiResult.Success) {
+                                // The server is the authority for secure quiz rewards. Mirror
+                                // its accepted cap to Firebase so the child UI updates live.
                                 saveLocalPolicy()
                             } else {
                                 Toast.makeText(
@@ -300,7 +306,9 @@ class DevicesFragment : Fragment() {
 
                 val childrenList = snapshot.children.mapNotNull { child ->
                     val id = child.key ?: return@mapNotNull null
-                    if (child.child("runtime").child("unpairRequestedAt").exists()) {
+                if (child.child("runtime").child("unpairRequestedAt").exists()) {
+                        // A child changed roles. Delete its entire record so a later
+                        // child-app launch cannot leave an "Unknown" orphan behind.
                         child.ref.removeValue()
                         return@mapNotNull null
                     }
@@ -419,6 +427,7 @@ class DevicesFragment : Fragment() {
         cancelBtn.startAnimation(btnAnim)
     }
 
+    /** Complete server cleanup after a previous unlink succeeded locally while offline. */
     private fun retryPendingSecureUnpairs(parentId: String) {
         if (ParentAccount.isGuest(requireContext())) return
         val pending = db.getReference("users/$parentId/pendingSecureUnpairs")
@@ -519,6 +528,8 @@ class DevicesFragment : Fragment() {
                     }
                 }
                 is LearningApiResult.Failure -> {
+                    // Firebase pairing is the normal transparent fallback. The parent only
+                    // needs feedback when creating a code fails altogether.
                     publishLegacyCode(parentDeviceId, tvCode, guestApprovalHash)
                 }
             }

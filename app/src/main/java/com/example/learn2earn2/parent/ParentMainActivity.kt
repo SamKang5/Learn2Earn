@@ -1,4 +1,4 @@
-package com.example.learn2earn2.parent
+﻿package com.example.learn2earn2.parent
 
 import android.content.Context
 import android.content.Intent
@@ -11,7 +11,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.example.learn2earn2.R
 import com.example.learn2earn2.account.ParentAccount

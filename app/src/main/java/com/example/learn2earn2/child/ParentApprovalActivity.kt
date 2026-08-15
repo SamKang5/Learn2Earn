@@ -1,4 +1,4 @@
-package com.example.learn2earn2.child
+﻿package com.example.learn2earn2.child
 
 import android.content.Context
 import android.content.Intent
@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.learn2earn2.R
 import com.example.learn2earn2.account.GuestApproval
+import com.example.learn2earn2.emergency.EmergencyContactsActivity
 import com.example.learn2earn2.onboarding.RoleSelectionActivity
 
 class ParentApprovalActivity : AppCompatActivity() {
@@ -141,7 +142,7 @@ class ParentApprovalActivity : AppCompatActivity() {
     }
 
     private fun openEmergencyContactSettings() {
-        startActivity(Intent(this, com.example.learn2earn2.emergency.EmergencyContactsActivity::class.java))
+        startActivity(Intent(this, EmergencyContactsActivity::class.java))
         finish()
     }
 

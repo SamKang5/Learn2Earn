@@ -1,4 +1,4 @@
-package com.example.learn2earn2.image
+﻿package com.example.learn2earn2.image
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -17,6 +17,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.util.UUID
 import kotlin.math.max
+import kotlin.math.min
 
 class CropImageView(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
 

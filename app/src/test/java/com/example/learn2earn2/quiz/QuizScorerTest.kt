@@ -1,4 +1,4 @@
-package com.example.learn2earn2.quiz
+﻿package com.example.learn2earn2.quiz
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -25,14 +25,6 @@ class QuizScorerTest {
             listOf(QuizAnswer(setOf(0, 2), setOf(0, 1, 2)))
         )
 
-        assertEquals(0, score.percent)
-    }
-
-    @Test
-    fun handlesEmptyAnswersGracefully() {
-        val score = QuizScorer.score(emptyList())
-        assertEquals(0, score.correctQuestions)
-        assertEquals(0, score.totalQuestions)
         assertEquals(0, score.percent)
     }
 

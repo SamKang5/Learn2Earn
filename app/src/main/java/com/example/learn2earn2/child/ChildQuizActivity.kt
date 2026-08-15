@@ -1,4 +1,4 @@
-package com.example.learn2earn2.child
+﻿package com.example.learn2earn2.child
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -368,8 +368,8 @@ class ChildQuizActivity : AppCompatActivity() {
             rewardTiers = snapshot.child("rewardTiers").children.mapNotNull { tier ->
                 val score = (tier.child("minimumScorePercent").value as? Number)?.toInt()
                 val minutes = (tier.child("rewardMinutes").value as? Number)?.toInt()
-                if (score != null && minutes != null) RewardTier(score, minutes) else null
-            }.ifEmpty { listOf(RewardTier((snapshot.child("passingScorePercent").value as? Number)?.toInt() ?: 80, (snapshot.child("rewardMinutes").value as? Number)?.toInt() ?: 15)) }
+                if (score != null && minutes != null) com.example.learn2earn2.quiz.RewardTier(score, minutes) else null
+            }.ifEmpty { listOf(com.example.learn2earn2.quiz.RewardTier((snapshot.child("passingScorePercent").value as? Number)?.toInt() ?: 80, (snapshot.child("rewardMinutes").value as? Number)?.toInt() ?: 15)) }
         ).normalized()
         return ChildQuiz(
             id = id,
@@ -615,6 +615,8 @@ class ChildQuizActivity : AppCompatActivity() {
         state: String,
         done: (Boolean) -> Unit
     ) {
+        // Guest mode is intentionally local-authority. Only progress is shared;
+        // reward credit stays in the child's deduplicated local queue.
         childRef.child("quizProgress").child(activeQuiz.id).setValue(
             mapOf(
                 "attemptCount" to attemptNumber,
@@ -626,6 +628,10 @@ class ChildQuizActivity : AppCompatActivity() {
         ).addOnCompleteListener { done(it.isSuccessful) }
     }
 
+    /**
+     * D1 remains the reward authority. Firebase only mirrors the latest balance so the
+     * parent's existing child listener can update without a manual refresh.
+     */
     private fun mirrorStudyEnergy(body: JSONObject) {
         val energy = body.optJSONObject("studyEnergy") ?: return
         if (!energy.has("remainingMinutes") || !energy.has("capMinutes")) return

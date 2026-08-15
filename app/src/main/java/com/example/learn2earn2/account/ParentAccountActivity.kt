@@ -10,10 +10,14 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.learn2earn2.R
+import com.example.learn2earn2.onboarding.RoleSelectionActivity
+import com.example.learn2earn2.parent.ParentMainActivity
+import com.example.learn2earn2.ui.AppCredits
 import com.example.learn2earn2.ui.KeyboardDismissActivity
 import com.google.firebase.auth.FirebaseAuth
 
@@ -43,6 +47,15 @@ class ParentAccountActivity : KeyboardDismissActivity() {
             insets
         }
 
+        findViewById<TextView>(R.id.tv_account_app_title)?.setOnClickListener { AppCredits.show(this) }
+        findViewById<View>(R.id.btn_reset_role)?.setOnClickListener { returnToRoleSelection() }
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                returnToRoleSelection()
+            }
+        })
+
         email = findViewById(R.id.et_account_email)
         password = findViewById(R.id.et_account_password)
         confirmPassword = findViewById(R.id.et_account_confirm_password)
@@ -53,6 +66,19 @@ class ParentAccountActivity : KeyboardDismissActivity() {
         guestButton = findViewById(R.id.btn_continue_guest)
         guestButton.setOnClickListener { continueAsGuest() }
         if (intent.getBooleanExtra(EXTRA_FORCE_REGISTER, false)) toggleMode()
+    }
+
+    private fun returnToRoleSelection() {
+        getSharedPreferences("learn2earn_prefs", Context.MODE_PRIVATE)
+            .edit().remove("user_role").apply()
+        startActivity(
+            Intent(this, RoleSelectionActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+        )
+        @Suppress("DEPRECATION")
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        finish()
     }
 
     private fun toggleMode() {
@@ -110,7 +136,9 @@ class ParentAccountActivity : KeyboardDismissActivity() {
 
     private fun openParent() {
         getSharedPreferences("learn2earn_prefs", Context.MODE_PRIVATE).edit().putString("user_role", "parent").apply()
-        Toast.makeText(this, "Parent session ready", Toast.LENGTH_SHORT).show()
+        startActivity(Intent(this, ParentMainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        })
         finish()
     }
 

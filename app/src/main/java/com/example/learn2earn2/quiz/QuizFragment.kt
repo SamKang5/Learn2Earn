@@ -1,4 +1,4 @@
-package com.example.learn2earn2.quiz
+﻿package com.example.learn2earn2.quiz
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -67,6 +68,9 @@ class QuizFragment : Fragment() {
         quizzesRef = db.getReference("users/$parentId/quizzes")
         quizzesListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                // Older quizzes only stored local content:// URIs. Those URIs are
+                // private to the parent phone, so turn them into portable data once
+                // while the parent still has permission to read them.
                 snapshot.children.forEach(::backfillPortableMedia)
                 quizzes = snapshot.children.mapNotNull { quiz ->
                     val id = quiz.key ?: return@mapNotNull null
@@ -123,6 +127,8 @@ class QuizFragment : Fragment() {
         }
         if (updates.isNotEmpty()) {
             quiz.ref.updateChildren(updates).addOnSuccessListener {
+                // Secure assignments are snapshots in the learning service, so update
+                // their cover too; legacy child devices read the Firebase update above.
                 (updates["coverImageData"] as? String)?.let { cover ->
                     LearningApi.syncQuizCover(
                         requireContext(),

@@ -61,11 +61,11 @@ class RoleSelectionActivity : AppCompatActivity() {
 
     private fun saveRoleAndNavigate(role: String) {
         val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        prefs.edit().putString(KEY_ROLE, role).apply()
         if (role == ROLE_PARENT) {
             startActivity(Intent(this, ParentAccountActivity::class.java))
             finish()
         } else {
+            prefs.edit().putString(KEY_ROLE, role).apply()
             navigateToMain(role)
         }
     }

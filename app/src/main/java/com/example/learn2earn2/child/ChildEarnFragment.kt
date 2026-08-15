@@ -1,4 +1,4 @@
-package com.example.learn2earn2.child
+﻿package com.example.learn2earn2.child
 
 import android.content.Context
 import android.content.Intent
@@ -16,7 +16,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.learn2earn2.R
 import com.example.learn2earn2.quiz.LearningApi
@@ -148,6 +147,11 @@ class ChildEarnFragment : Fragment(R.layout.fragment_child_earn) {
         }.addOnFailureListener { showEmpty("Could not load quizzes") }
     }
 
+    /**
+     * Firebase carries the parent-visible cap to the child instantly. Secure rewards are
+     * still calculated by the learning service, so after a cap change we refresh the
+     * authoritative used amount instead of trying to deduct already-earned time locally.
+     */
     private fun observeStudyEnergy() {
         val context = requireContext()
         val prefs = context.getSharedPreferences("learn2earn_child", Context.MODE_PRIVATE)
@@ -166,6 +170,8 @@ class ChildEarnFragment : Fragment(R.layout.fragment_child_earn) {
                 val capChanged = observedEnergyCapMinutes != cap
                 observedEnergyCapMinutes = cap
                 if (secureLearning) {
+                    // Keep the latest known amount visible immediately, then replace it
+                    // with the service-calculated balance (cap minus today's earned amount).
                     renderStudyEnergy((cap - displayedEnergyUsedMinutes).coerceAtLeast(0), cap)
                     if (capChanged) refreshSecureStudyEnergy()
                 } else {
@@ -384,13 +390,10 @@ class ChildEarnFragment : Fragment(R.layout.fragment_child_earn) {
         }
 
     private fun openQuiz(item: CatalogItem, review: Boolean) {
-        startActivity(
-            android.content.Intent(requireContext(), ChildQuizActivity::class.java).apply {
-                putExtra(ChildQuizActivity.EXTRA_QUIZ_ID, item.id)
-                putExtra(ChildQuizActivity.EXTRA_SECURE_ASSIGNMENT, item.secure)
-                putExtra(ChildQuizActivity.EXTRA_REVIEW, review)
-            }
-        )
+        startActivity(Intent(requireContext(), ChildQuizActivity::class.java)
+            .putExtra(ChildQuizActivity.EXTRA_QUIZ_ID, item.id)
+            .putExtra(ChildQuizActivity.EXTRA_SECURE_ASSIGNMENT, item.secure)
+            .putExtra(ChildQuizActivity.EXTRA_REVIEW, review))
     }
 
     private fun showEmpty(message: String) {

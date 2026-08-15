@@ -1,4 +1,4 @@
-package com.example.learn2earn2.child
+﻿package com.example.learn2earn2.child
 
 import android.content.Context
 import android.content.Intent
@@ -186,6 +186,7 @@ class ChildMainActivity : KeyboardDismissActivity() {
             ?: androidDeviceId
 
         if (savedParentId != null) {
+            // Supports child devices paired before persistent lock enforcement existed.
             prefs.edit()
                 .putString(ChildLockService.CHILD_ID, childDeviceId)
                 .putString("auth_uid", auth.currentUser?.uid)
@@ -204,6 +205,7 @@ class ChildMainActivity : KeyboardDismissActivity() {
             val code = pairingDigits.joinToString("") { it.text.toString() }.trim().uppercase()
             if (code.length != 6) {
                 Toast.makeText(this, "Enter the 6-character code", Toast.LENGTH_SHORT).show()
+                // Shake the input field
                 pairingCodeFields.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake))
                 return@setOnClickListener
             }
@@ -213,6 +215,9 @@ class ChildMainActivity : KeyboardDismissActivity() {
             btnLink.isEnabled = false
             btnLink.text = getString(R.string.linking)
 
+            // The API allows a 20s connect + 30s read. Keep the UI request alive
+            // long enough for that, and use a generation token so a late callback
+            // from an older attempt can never complete a newer one.
             val timeoutRunnable = Runnable {
                 if (isCurrentLinkAttempt(attempt)) {
                     failPairing(attempt, "Connection timeout. Check Firebase / Internet.")
@@ -224,63 +229,63 @@ class ChildMainActivity : KeyboardDismissActivity() {
             childDeviceId = auth.currentUser?.uid ?: childDeviceId
 
             codeRef.get().addOnCompleteListener { task ->
-                if (!isCurrentLinkAttempt(attempt)) return@addOnCompleteListener
-                if (!task.isSuccessful) {
-                    failPairing(
-                        attempt,
-                        "Could not check the pairing code. Check Internet and Firebase setup."
-                    )
-                    return@addOnCompleteListener
-                }
-                val snapshot = task.result
-                val expiresAt = (snapshot.child("expiresAt").value as? Number)?.toLong()
-                val parentDeviceId = (snapshot.value as? String)
-                    ?: snapshot.child("parentUid").getValue(String::class.java)
-                if (parentDeviceId.isNullOrBlank() ||
-                    (expiresAt != null && expiresAt < System.currentTimeMillis())
-                ) {
-                    failPairing(attempt, "Invalid or expired code.")
-                    pairingCodeFields.startAnimation(
-                        AnimationUtils.loadAnimation(this, R.anim.shake)
-                    )
-                    return@addOnCompleteListener
-                }
-                val secureLearning = snapshot.child("secureLearning")
-                    .getValue(Boolean::class.java) ?: false
-                if (!secureLearning) {
+                    if (!isCurrentLinkAttempt(attempt)) return@addOnCompleteListener
+                    if (!task.isSuccessful) {
+                        failPairing(
+                            attempt,
+                            "Could not check the pairing code. Check Internet and Firebase setup."
+                        )
+                        return@addOnCompleteListener
+                    }
+                    val snapshot = task.result
+                    val expiresAt = (snapshot.child("expiresAt").value as? Number)?.toLong()
+                    val parentDeviceId = (snapshot.value as? String)
+                        ?: snapshot.child("parentUid").getValue(String::class.java)
+                    if (parentDeviceId.isNullOrBlank() ||
+                        (expiresAt != null && expiresAt < System.currentTimeMillis())
+                    ) {
+                        failPairing(attempt, "Invalid or expired code.")
+                        pairingCodeFields.startAnimation(
+                            AnimationUtils.loadAnimation(this, R.anim.shake)
+                        )
+                        return@addOnCompleteListener
+                    }
+                    val secureLearning = snapshot.child("secureLearning")
+                        .getValue(Boolean::class.java) ?: false
+                    if (!secureLearning) {
+                        val guestApprovalHash = GuestApprovalHandoff.select(
+                            snapshot.child(GuestApproval.KEY_HASH).getValue(String::class.java),
+                            GuestApprovalHandoff.loadLocal(this)
+                        )
+                        claimFirebaseCode(
+                            parentDeviceId, code, codeRef, prefs, timeoutRunnable, false, attempt,
+                            guestApprovalHash
+                        )
+                        return@addOnCompleteListener
+                    }
                     val guestApprovalHash = GuestApprovalHandoff.select(
                         snapshot.child(GuestApproval.KEY_HASH).getValue(String::class.java),
                         GuestApprovalHandoff.loadLocal(this)
                     )
-                    claimFirebaseCode(
-                        parentDeviceId, code, codeRef, prefs, timeoutRunnable, false, attempt,
-                        guestApprovalHash
-                    )
-                    return@addOnCompleteListener
-                }
-                val guestApprovalHash = GuestApprovalHandoff.select(
-                    snapshot.child(GuestApproval.KEY_HASH).getValue(String::class.java),
-                    GuestApprovalHandoff.loadLocal(this)
-                )
-                LearningApi.claimPairingCode(this, code, auth) { result ->
-                    if (!isCurrentLinkAttempt(attempt)) return@claimPairingCode
-                    when (result) {
-                        is LearningApiResult.Success -> {
-                            if (result.body.optString("parentUid") != parentDeviceId) {
-                                failPairing(attempt, "Secure pairing returned an invalid parent.")
-                            } else {
-                                prefs.edit().putString("pending_parent_id", parentDeviceId)
-                                    .putString("pending_pairing_code", code).apply()
-                                claimFirebaseCode(
-                                    parentDeviceId, code, codeRef, prefs, timeoutRunnable, true, attempt,
-                                    guestApprovalHash
-                                )
+                    LearningApi.claimPairingCode(this, code, auth) { result ->
+                        if (!isCurrentLinkAttempt(attempt)) return@claimPairingCode
+                        when (result) {
+                            is LearningApiResult.Success -> {
+                                if (result.body.optString("parentUid") != parentDeviceId) {
+                                    failPairing(attempt, "Secure pairing returned an invalid parent.")
+                                } else {
+                                    prefs.edit().putString("pending_parent_id", parentDeviceId)
+                                        .putString("pending_pairing_code", code).apply()
+                                    claimFirebaseCode(
+                                        parentDeviceId, code, codeRef, prefs, timeoutRunnable, true, attempt,
+                                        guestApprovalHash
+                                    )
+                                }
                             }
+                            is LearningApiResult.Failure -> failPairing(attempt, result.message)
                         }
-                        is LearningApiResult.Failure -> failPairing(attempt, result.message)
                     }
                 }
-            }
         }
 
         btnResetRole.setOnClickListener { requestRoleSwitch() }
@@ -561,6 +566,7 @@ class ChildMainActivity : KeyboardDismissActivity() {
             if (childDeviceId == "unknown_child") childDeviceId = current.uid
             return
         }
+        // A parent credential must never remain active in child mode.
         if (current != null) auth.signOut()
         btnLink.isEnabled = false
         auth.signInAnonymously().addOnCompleteListener { task ->
@@ -737,6 +743,8 @@ class ChildMainActivity : KeyboardDismissActivity() {
         if (isCheckingRoleSwitch) return
         isCheckingRoleSwitch = true
 
+        // A parent can remove this child while the child's Firebase listener is offline.
+        // Verify the link before requiring credentials that no longer exist remotely.
         db.getReference("users/$parentId/children/$childId")
             .get()
             .addOnCompleteListener { task ->
@@ -748,6 +756,8 @@ class ChildMainActivity : KeyboardDismissActivity() {
                     return@addOnCompleteListener
                 }
 
+                // A freshly paired device can be asked to switch before its live listener
+                // has cached the approval details. Hydrate them from this verification read.
                 if (task.isSuccessful) {
                     task.result.child("parentEmail").getValue(String::class.java)?.let { email ->
                         prefs.edit().putString(ParentApprovalActivity.PARENT_EMAIL, email).apply()

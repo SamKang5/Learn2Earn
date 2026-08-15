@@ -1,4 +1,4 @@
-package com.example.learn2earn2.child
+﻿package com.example.learn2earn2.child
 
 import android.app.AppOpsManager
 import android.app.Notification
@@ -19,7 +19,6 @@ import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.example.learn2earn2.R
@@ -30,12 +29,13 @@ import com.example.learn2earn2.child.time.ScreenTimeEngine
 import com.example.learn2earn2.child.time.ScreenTimePolicy
 import com.example.learn2earn2.child.time.ScreenTimeState
 import com.example.learn2earn2.child.time.ScreenTimeStore
+import com.example.learn2earn2.emergency.EmergencyCallActivity
 import com.example.learn2earn2.quiz.QuizRewardStore
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
-import java.time.ZonedDateTime
 import java.util.Calendar
+import java.time.ZonedDateTime
 
 /** Keeps the child-side lock active even after the child app is no longer open. */
 class ChildLockService : Service() {
@@ -613,11 +613,16 @@ class ChildLockService : Service() {
             })
             if (exhausted) {
                 addView(lockActionButton("Open Learn2Earn to Earn Time", android.R.drawable.ic_menu_edit) {
-                    openChildApp()
+                    openChildActivity(Intent(this@ChildLockService, ChildMainActivity::class.java).apply {
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        putExtra(ChildMainActivity.EXTRA_OPEN_EARN, true)
+                    })
                 })
             }
             addView(lockActionButton("Emergency", android.R.drawable.ic_menu_call) {
-                openEmergencyCall()
+                openChildActivity(Intent(this@ChildLockService, EmergencyCallActivity::class.java).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                })
             })
         }
         val params = WindowManager.LayoutParams(
@@ -733,24 +738,11 @@ class ChildLockService : Service() {
         super.onDestroy()
     }
 
-    private fun openChildApp() {
+    private fun openChildActivity(intent: Intent) {
         childActivityLaunchDeadline = System.currentTimeMillis() + CHILD_ACTIVITY_LAUNCH_GRACE_MS
         ForegroundAppTracker.update(packageName)
         hideOverlay()
-        val launchIntent = packageManager.getLaunchIntentForPackage(packageName)
-        if (launchIntent != null) {
-            launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            startActivity(launchIntent)
-        }
-    }
-
-    private fun openEmergencyCall() {
-        childActivityLaunchDeadline = System.currentTimeMillis() + CHILD_ACTIVITY_LAUNCH_GRACE_MS
-        ForegroundAppTracker.update(packageName)
-        hideOverlay()
-        startActivity(Intent(this, com.example.learn2earn2.emergency.EmergencyCallActivity::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        })
+        startActivity(intent)
     }
 
     private fun hasActiveLocalPairing(): Boolean =
@@ -770,6 +762,8 @@ class ChildLockService : Service() {
         private const val SAVE_INTERVAL_MS = 15_000L
         private const val DIALER_LAUNCH_GRACE_MS = 2_000L
         private const val CHILD_ACTIVITY_LAUNCH_GRACE_MS = 2_000L
+        // A visible debug counter is useful during setup, while still keeping Firebase writes
+        // comfortably within the free tier for a small family deployment.
         private const val RUNTIME_SYNC_INTERVAL_MS = 15_000L
         private const val MAX_DAILY_FREE_SECONDS = 24L * 60 * 60 + 59L * 60
         private const val MAX_TIME_COMMAND_SECONDS = 365L * 24 * 60 * 60

@@ -1,4 +1,4 @@
-package com.example.learn2earn2.account
+﻿package com.example.learn2earn2.account
 
 object ParentSessionReentryPolicy {
     fun canUseGuestParentSession(isGuest: Boolean, authUid: String?, authIsAnonymous: Boolean): Boolean =
@@ -14,4 +14,5 @@ object ParentSessionReentryPolicy {
         } else {
             !authUid.isNullOrBlank() && !authIsAnonymous
         }
+
 }
