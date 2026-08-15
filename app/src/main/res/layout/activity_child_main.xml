@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/child_canvas"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/child_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="12dp">
+
+        <TextView
+            android:id="@+id/tv_child_app_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="sans-serif-medium"
+            android:letterSpacing="-0.02"
+            android:text="Learn2Earn"
+            android:contentDescription="Learn2Earn credits"
+            android:textColor="@color/child_ink"
+            android:textSize="21sp" />
+
+        <ImageButton
+            android:id="@+id/btn_reset_role"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_child_icon_tile"
+            android:contentDescription="Switch user"
+            android:padding="12dp"
+            android:src="@drawable/ic_child_switch" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ScrollView
+            android:id="@+id/ll_unpaired_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:fillViewport="true"
+            android:overScrollMode="never"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingTop="38dp"
+                android:paddingBottom="32dp">
+
+                <FrameLayout
+                    android:layout_width="76dp"
+                    android:layout_height="76dp"
+                    android:background="@drawable/bg_child_icon_tile"
+                    android:padding="21dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_child_wallet" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:letterSpacing="-0.03"
+                    android:text="Connect device"
+                    android:textColor="@color/child_ink"
+                    android:textSize="32sp" />
+
+                <TextView
+                    android:layout_width="260dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="Enter the six-character code from your parent."
+                    android:textColor="@color/child_muted"
+                    android:textSize="15sp" />
+
+                <LinearLayout
+                    android:id="@+id/ll_pairing_code_fields"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:orientation="horizontal">
+
+                    <EditText android:id="@+id/pairing_digit_1" style="@style/L2E.PairingDigit" android:hint="L" />
+                    <EditText android:id="@+id/pairing_digit_2" style="@style/L2E.PairingDigit" android:layout_marginStart="6dp" android:hint="2" />
+                    <EditText android:id="@+id/pairing_digit_3" style="@style/L2E.PairingDigit" android:layout_marginStart="6dp" android:hint="E" />
+                    <EditText android:id="@+id/pairing_digit_4" style="@style/L2E.PairingDigit" android:layout_marginStart="6dp" android:hint="4" />
+                    <EditText android:id="@+id/pairing_digit_5" style="@style/L2E.PairingDigit" android:layout_marginStart="6dp" android:hint="2" />
+                    <EditText android:id="@+id/pairing_digit_6" style="@style/L2E.PairingDigit" android:layout_marginStart="6dp" android:hint="A" />
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_link"
+                    style="@style/L2E.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="58dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_child_primary"
+                    android:backgroundTint="@null"
+                    android:text="Connect"
+                    android:textColor="@color/white"
+                    app:icon="@drawable/ic_child_sync"
+                    app:iconGravity="textStart"
+                    app:iconTint="@color/white" />
+            </LinearLayout>
+        </ScrollView>
+
+        <FrameLayout
+            android:id="@+id/ll_paired_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <ScrollView
+                android:id="@+id/child_wallet_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:fillViewport="true"
+                android:overScrollMode="never"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="28dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:letterSpacing="-0.03"
+                        android:text="Wallet"
+                        android:textColor="@color/child_ink"
+                        android:textSize="32sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        android:background="@drawable/bg_child_balance"
+                        android:elevation="8dp"
+                        android:orientation="vertical"
+                        android:padding="24dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Total available"
+                            android:textColor="@color/child_on_dark_muted"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/tv_total_time"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:fontFamily="monospace"
+                            android:letterSpacing="-0.04"
+                            android:text="00:00:00"
+                            android:textColor="@color/child_on_dark"
+                            android:textSize="40sp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="22dp"
+                            android:background="#306C8D84" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="18dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Free today"
+                                    android:textColor="@color/child_on_dark_muted"
+                                    android:textSize="12sp" />
+
+                                <TextView
+                                    android:id="@+id/tv_free_time"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:fontFamily="monospace"
+                                    android:text="00:00:00"
+                                    android:textColor="@color/child_on_dark"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Time Bank"
+                                    android:textColor="@color/child_on_dark_muted"
+                                    android:textSize="12sp" />
+
+                                <TextView
+                                    android:id="@+id/tv_time_bank"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:fontFamily="monospace"
+                                    android:text="00:00:00"
+                                    android:textColor="@color/child_on_dark"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tv_free_time_note"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="18dp"
+                            android:text="Free time is used first."
+                            android:textColor="@color/child_on_dark_muted"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/bg_child_card"
+                        android:elevation="2dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <FrameLayout
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/bg_child_icon_tile"
+                            android:padding="12dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_child_shield" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_child_status"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-medium"
+                                android:text="Checking"
+                                android:textColor="@color/child_ink"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/tv_screentime_debug"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:ellipsize="end"
+                                android:maxLines="2"
+                                android:text="Timer paused in Learn2Earn."
+                                android:textColor="@color/child_muted"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Device"
+                        android:textColor="@color/child_ink"
+                        android:textSize="18sp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_enable_protection"
+                        style="@style/L2E.Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/bg_child_secondary"
+                        android:backgroundTint="@null"
+                        android:gravity="start|center_vertical"
+                        android:text="Protection"
+                        android:textColor="@color/child_ink"
+                        app:icon="@drawable/ic_child_shield"
+                        app:iconGravity="textStart"
+                        app:iconPadding="14dp"
+                        app:iconTint="@null" />
+
+                    <TextView
+                        android:id="@+id/tv_protection_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="6dp"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="Checking protection"
+                        android:textColor="@color/child_muted"
+                        android:textSize="12sp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_refresh_parent_apps"
+                        style="@style/L2E.Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/bg_child_secondary"
+                        android:backgroundTint="@null"
+                        android:gravity="start|center_vertical"
+                        android:text="Sync apps"
+                        android:textColor="@color/child_ink"
+                        app:icon="@drawable/ic_child_sync"
+                        app:iconGravity="textStart"
+                        app:iconPadding="14dp"
+                        app:iconTint="@null" />
+
+                    <TextView
+                        android:id="@+id/tv_app_sync_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="6dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="Not synced yet"
+                        android:textColor="@color/child_muted"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </ScrollView>
+
+            <FrameLayout
+                android:id="@+id/child_earn_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
+        </FrameLayout>
+    </FrameLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/child_bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:background="@color/child_surface"
+        android:elevation="12dp"
+        android:visibility="gone"
+        app:itemActiveIndicatorStyle="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
+        app:itemIconTint="@color/child_accent"
+        app:itemTextColor="@color/child_accent"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/child_nav_menu" />
+</LinearLayout>
