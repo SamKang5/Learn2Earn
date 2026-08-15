@@ -1,0 +1,12 @@
+<resources>
+    <style name="Base.Theme.Learn2Earn" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/l2e_forest</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/l2e_citrus</item>
+        <item name="android:fontFamily">sans</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/l2e_canvas</item>
+        <item name="android:navigationBarColor">@color/l2e_surface</item>
+        <item name="android:forceDarkAllowed">false</item>
+    </style>
+</resources>

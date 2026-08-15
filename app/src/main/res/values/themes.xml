@@ -1,5 +1,44 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <style name="Theme.Learn2Earn2" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Base.Theme.Learn2Earn" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/l2e_forest</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/l2e_citrus</item>
+        <item name="android:fontFamily">sans</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/l2e_canvas</item>
+        <item name="android:navigationBarColor">@color/l2e_surface</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:forceDarkAllowed">false</item>
+    </style>
+    <style name="Theme.Learn2Earn" parent="Base.Theme.Learn2Earn" />
+    <style name="L2E.Button" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:stateListAnimator">@animator/press_scale</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:backgroundTint">@null</item>
+        <item name="backgroundTint">@null</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+    </style>
+    <style name="L2E.DialogCancel" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:backgroundTint">@android:color/transparent</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+    <style name="L2E.PairingDigit" parent="Widget.AppCompat.EditText">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/bg_pairing_digit</item>
+        <item name="android:gravity">center</item>
+        <item name="android:inputType">textCapCharacters</item>
+        <item name="android:maxLength">1</item>
+        <item name="android:textColor">@color/l2e_ink</item>
+        <item name="android:textColorHint">@color/l2e_muted</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
 </resources>

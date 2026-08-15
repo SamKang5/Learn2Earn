@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="action_view_quiz" type="id" />
+    <item name="action_edit_quiz" type="id" />
+    <item name="action_delete_quiz" type="id" />
+</resources>

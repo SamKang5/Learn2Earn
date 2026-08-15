@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Learn2Earn2</string>
+    <string name="ai_quiz_api_url">https://learn2earn-ai.pages.dev/api/generate-quiz</string>
+    <string name="learning_api_url">https://learn2earn-ai.pages.dev/api/learning</string>
+    <string name="link_to_parent">Link to parent</string>
+    <string name="linking">Linking…</string>
+    <string name="locked">Locked</string>
+    <string name="unlocked">Unlocked</string>
+    <string name="lock">Lock</string>
+    <string name="unlock">Unlock</string>
+    <string name="child_usage_accessibility_description">Tracks the foreground app so Learn2Earn can apply timer and block rules reliably.</string>
 </resources>

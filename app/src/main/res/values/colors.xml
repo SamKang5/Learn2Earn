@@ -1,10 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="l2e_canvas">#FFF2F5F7</color>
+    <color name="l2e_surface">#FFFFFFFF</color>
+    <color name="l2e_ink">#FF12212B</color>
+    <color name="l2e_muted">#FF5D6B75</color>
+    <color name="l2e_outline">#FFD6E0E5</color>
+    <color name="l2e_forest">#FF0B5563</color>
+    <color name="l2e_forest_pressed">#FF073D49</color>
+    <color name="l2e_sage">#FFDDF1F0</color>
+    <color name="l2e_citrus">#FFFFB547</color>
+    <color name="l2e_citrus_soft">#FFFFF0D4</color>
+    <color name="l2e_success">#FF147D64</color>
+    <color name="l2e_danger">#FFD64550</color>
+    <color name="l2e_danger_soft">#FFFFE5E7</color>
+    <color name="l2e_free_surface">#FFF1FAF8</color>
+    <color name="l2e_bank_muted">#FFB8D5D8</color>
+    <color name="l2e_panel">#FFE8EFF2</color>
+    <color name="l2e_earn_surface">#FFFFF7E8</color>
+    <color name="l2e_progress_tint">#FFEFF7F6</color>
+    <color name="l2e_progress_line">#FFD7E6E4</color>
+
+    <color name="child_canvas">#FFF4F7F6</color>
+    <color name="child_surface">#FFFFFFFF</color>
+    <color name="child_ink">#FF10252E</color>
+    <color name="child_muted">#FF64767B</color>
+    <color name="child_line">#FFE1E9E6</color>
+    <color name="child_navy">#FF102D36</color>
+    <color name="child_navy_soft">#FF1B4148</color>
+    <color name="child_accent">#FF16745F</color>
+    <color name="child_accent_pressed">#FF105746</color>
+    <color name="child_mint">#FFDDF2EA</color>
+    <color name="child_warning">#FFF2A84B</color>
+    <color name="child_danger">#FFB8474F</color>
+    <color name="child_on_dark">#FFF4FAF7</color>
+    <color name="child_on_dark_muted">#FFAFCEC5</color>
 </resources>
