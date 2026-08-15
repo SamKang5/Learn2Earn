@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_child_wallet"
+        android:icon="@drawable/ic_child_wallet"
+        android:title="Wallet" />
+    <item
+        android:id="@+id/nav_child_earn"
+        android:icon="@drawable/ic_child_earn"
+        android:title="Earn" />
+</menu>
