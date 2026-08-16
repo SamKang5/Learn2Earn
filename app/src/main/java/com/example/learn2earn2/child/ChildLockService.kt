@@ -1,4 +1,4 @@
-﻿package com.example.learn2earn2.child
+package com.example.learn2earn2.child
 
 import android.app.AppOpsManager
 import android.app.Notification
@@ -255,14 +255,18 @@ class ChildLockService : Service() {
         }
         lastTickElapsedRealtime = nowElapsedRealtime
 
-        val rawForeground = foregroundPackage()
+        val isOurActivityForeground = ForegroundAppTracker.isAppActivityResumed()
+        val rawForeground = if (isOurActivityForeground) packageName else foregroundPackage()
         if (rawForeground != null && rawForeground != packageName) {
             lastNonServiceForegroundPackage = rawForeground
         }
         // Adding our overlay can generate an accessibility event for Learn2Earn itself.
-        // While the overlay is visible, keep enforcing against the app beneath it instead
-        // of treating the overlay's own window as an exempt Learn2Earn screen.
-        val foreground = if (overlayAdded &&
+        // While the overlay is visible over a third-party app, keep enforcing against the app beneath it.
+        // If an actual Learn2Earn Activity is resumed (e.g. ParentApproval, RoleSelection, Quizzes),
+        // we treat Learn2Earn as foreground and immediately clear the overlay.
+        val foreground = if (isOurActivityForeground) {
+            packageName
+        } else if (overlayAdded &&
             (rawForeground == null || rawForeground == packageName)
         ) {
             lastNonServiceForegroundPackage ?: rawForeground
@@ -280,7 +284,7 @@ class ChildLockService : Service() {
             exemptFromAutomaticRules = isAutomaticExempt(foreground),
             forceLocked = forceLocked
         )
-        if (!hasOverlayPermission() || nowEpochMillis < childActivityLaunchDeadline ||
+        if (isOurActivityForeground || !hasOverlayPermission() || nowEpochMillis < childActivityLaunchDeadline ||
             (overrideActive(nowEpochMillis) && !forceLocked)) {
             hideOverlay()
         } else if (emergencyDialActive) {
@@ -645,10 +649,15 @@ class ChildLockService : Service() {
     private fun lockActionButton(label: String, icon: Int, click: () -> Unit) = android.widget.Button(this).apply {
         text = label
         isAllCaps = false
+        textSize = 15f
+        typeface = android.graphics.Typeface.DEFAULT_BOLD
         setTextColor(getColor(R.color.child_ink))
         setBackgroundResource(R.drawable.bg_child_secondary)
-        setCompoundDrawablesWithIntrinsicBounds(icon, 0, 0, 0)
-        compoundDrawablePadding = 14
+        backgroundTintList = null
+        val iconDrawable = ContextCompat.getDrawable(this@ChildLockService, icon)?.mutate()
+        iconDrawable?.setTint(getColor(R.color.child_ink))
+        setCompoundDrawablesWithIntrinsicBounds(iconDrawable, null, null, null)
+        compoundDrawablePadding = (12 * resources.displayMetrics.density).toInt()
         setOnClickListener { click() }
         layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,

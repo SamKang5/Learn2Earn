@@ -233,6 +233,9 @@ object ScreenTimeEngine {
         exemptFromAutomaticRules: Boolean,
         forceLocked: Boolean
     ): EnforcementDecision {
+        if (exemptFromAutomaticRules || (foregroundPackage != null && foregroundPackage in policy.exemptPackages)) {
+            return EnforcementDecision(false, false, false, EnforcementReason.NONE)
+        }
         // With no selected-app rules, parent "Lock now" covers the device. Once rules
         // exist, a parent lock keeps respecting their selected-app scope.
         val forceLockWithoutSelectedApps = forceLocked &&
@@ -241,9 +244,6 @@ object ScreenTimeEngine {
             return EnforcementDecision(true, false, true, EnforcementReason.FORCE_LOCK)
         }
         if (foregroundPackage == null) {
-            return EnforcementDecision(false, false, false, EnforcementReason.NONE)
-        }
-        if (exemptFromAutomaticRules || foregroundPackage in policy.exemptPackages) {
             return EnforcementDecision(false, false, false, EnforcementReason.NONE)
         }
 

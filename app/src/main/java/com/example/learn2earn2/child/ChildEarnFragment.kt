@@ -1,4 +1,4 @@
-﻿package com.example.learn2earn2.child
+package com.example.learn2earn2.child
 
 import android.content.Context
 import android.content.Intent
@@ -385,6 +385,7 @@ class ChildEarnFragment : Fragment(R.layout.fragment_child_earn) {
             setTypeface(typeface, Typeface.BOLD)
             setTextColor(context.getColor(if (primary) R.color.white else R.color.child_accent))
             setBackgroundResource(if (primary) R.drawable.bg_child_primary else R.drawable.bg_child_secondary)
+            backgroundTintList = null
             stateListAnimator = android.animation.AnimatorInflater.loadStateListAnimator(context, R.animator.press_scale)
             setOnClickListener { action() }
         }

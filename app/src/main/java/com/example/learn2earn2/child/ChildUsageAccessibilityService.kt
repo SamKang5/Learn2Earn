@@ -18,10 +18,21 @@ class ChildUsageAccessibilityService : AccessibilityService() {
 /** Shared, in-process last-known foreground app supplied by the accessibility service. */
 object ForegroundAppTracker {
     @Volatile private var packageName: String? = null
+    @Volatile private var resumedActivityCount = 0
 
     fun update(value: String) {
         packageName = value
     }
+
+    fun onActivityResumed() {
+        resumedActivityCount++
+    }
+
+    fun onActivityPaused() {
+        resumedActivityCount = (resumedActivityCount - 1).coerceAtLeast(0)
+    }
+
+    fun isAppActivityResumed(): Boolean = resumedActivityCount > 0
 
     /**
      * Accessibility only sends an event when the active window changes. The current
