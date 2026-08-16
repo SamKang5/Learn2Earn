@@ -20,3 +20,4 @@ node_modules/
 .kotlin/
 ai-backend/.dev.vars*
 ai-backend/.wrangler/
+.KEYSTORE/
