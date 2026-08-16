@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:gravity="bottom" android:height="1dp">
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true">
         <shape android:shape="rectangle">
-            <solid android:color="@color/l2e_outline" />
+            <solid android:color="@color/child_mint" />
+            <stroke android:width="2dp" android:color="@color/child_accent" />
+            <corners android:radius="14dp" />
         </shape>
     </item>
-</layer-list>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/child_surface" />
+            <stroke android:width="1.5dp" android:color="@color/child_line" />
+            <corners android:radius="14dp" />
+        </shape>
+    </item>
+</selector>

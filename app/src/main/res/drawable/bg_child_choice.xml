@@ -3,18 +3,21 @@
     <item android:state_checked="true">
         <shape android:shape="rectangle">
             <solid android:color="@color/child_mint" />
+            <stroke android:width="2dp" android:color="@color/child_accent" />
             <corners android:radius="18dp" />
         </shape>
     </item>
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <solid android:color="@color/child_line" />
+            <solid android:color="@color/child_mint" />
+            <stroke android:width="1dp" android:color="@color/child_accent" />
             <corners android:radius="18dp" />
         </shape>
     </item>
     <item>
         <shape android:shape="rectangle">
             <solid android:color="@color/child_surface" />
+            <stroke android:width="1.5dp" android:color="@color/child_line" />
             <corners android:radius="18dp" />
         </shape>
     </item>

@@ -5,6 +5,6 @@
         android:endColor="@color/child_navy_soft"
         android:startColor="@color/child_navy"
         android:type="linear" />
-    <corners android:radius="28dp" />
-    <stroke android:width="1dp" android:color="#264D7B70" />
+    <corners android:radius="26dp" />
+    <stroke android:width="1.5dp" android:color="#4DEA9F4E" />
 </shape>

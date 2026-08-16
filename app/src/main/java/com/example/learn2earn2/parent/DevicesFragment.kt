@@ -1,4 +1,4 @@
-﻿package com.example.learn2earn2.parent
+package com.example.learn2earn2.parent
 
 import android.os.Bundle
 import android.app.Dialog
@@ -605,12 +605,13 @@ class DevicesFragment : Fragment() {
             selectAll()
             hint = "Child's name"
         }
+        var finalName = child.name
         AlertDialog.Builder(requireContext())
-            .setTitle("Name this child")
-            .setMessage("Use a name that makes this device easy to recognize.")
+            .setTitle("Step 1 of 4: Name this child")
+            .setMessage("Give this child's device a name you recognize (e.g. \"Alex\").")
             .setView(input)
             .setNegativeButton("Keep default", null)
-            .setPositiveButton("Save", null)
+            .setPositiveButton("Next (1/4)", null)
             .create()
             .also { dialog ->
                 dialog.setOnShowListener {
@@ -620,12 +621,14 @@ class DevicesFragment : Fragment() {
                             input.error = "Enter a name"
                             return@setOnClickListener
                         }
+                        finalName = name
                         ref.child(child.id).child("name").setValue(name)
                         dialog.dismiss()
                     }
                 }
                 dialog.setOnDismissListener {
-                    promptInitialDailyFreeTime(child, ref)
+                    val updatedChild = child.copy(name = finalName)
+                    promptInitialDailyFreeTime(updatedChild, ref)
                 }
                 dialog.show()
             }
@@ -634,18 +637,18 @@ class DevicesFragment : Fragment() {
     private fun promptInitialDailyFreeTime(child: ChildDevice, ref: DatabaseReference) {
         if (!isAdded) return
         val minutes = EditText(requireContext()).apply {
-            hint = "Minutes per day"
+            hint = "Minutes per day (e.g. 60)"
             inputType = android.text.InputType.TYPE_CLASS_NUMBER
             setSingleLine(true)
             setText(((child.dailyFreeSeconds ?: 60L * 60L) / 60L).toString())
             selectAll()
         }
         val dialog = AlertDialog.Builder(requireContext())
-            .setTitle("Set daily free time")
-            .setMessage("This resets each day. Quiz rewards and parent-given time stay separate.")
+            .setTitle("Step 2 of 4: Daily free time")
+            .setMessage("How many minutes of free screen time should ${child.name} start with each day before needing to do quizzes? (Resets at midnight).")
             .setView(minutes)
-            .setNegativeButton("Later", null)
-            .setPositiveButton("Save", null)
+            .setNegativeButton("Skip (60m)", null)
+            .setPositiveButton("Next (2/4)", null)
             .create()
         dialog.setOnShowListener {
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
@@ -665,7 +668,74 @@ class DevicesFragment : Fragment() {
                 dialog.dismiss()
             }
         }
+        dialog.setOnDismissListener {
+            promptInitialStudyEnergyCap(child, ref)
+        }
         dialog.show()
+    }
+
+    private fun promptInitialStudyEnergyCap(child: ChildDevice, ref: DatabaseReference) {
+        if (!isAdded) return
+        val minutes = EditText(requireContext()).apply {
+            hint = "Max quiz minutes per day (e.g. 120)"
+            inputType = android.text.InputType.TYPE_CLASS_NUMBER
+            setSingleLine(true)
+            setText((child.dailyRewardCapMinutes ?: DEFAULT_DAILY_REWARD_CAP_MINUTES).toString())
+            selectAll()
+        }
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle("Step 3 of 4: Daily quiz reward cap")
+            .setMessage("Set the maximum minutes of screen time ${child.name} can earn per day by solving quizzes (Study Energy).")
+            .setView(minutes)
+            .setNegativeButton("Skip (120m)", null)
+            .setPositiveButton("Next (3/4)", null)
+            .create()
+        dialog.setOnShowListener {
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                val value = minutes.text.toString().toIntOrNull()
+                if (value == null || value !in 0..(24 * 60)) {
+                    minutes.error = "Enter 0 to 1440 minutes"
+                    return@setOnClickListener
+                }
+                ref.child(child.id).child("dailyRewardCapMinutes").setValue(value)
+                dialog.dismiss()
+            }
+        }
+        dialog.setOnDismissListener {
+            promptInitialAppRules(child, ref)
+        }
+        dialog.show()
+    }
+
+    private fun promptInitialAppRules(child: ChildDevice, ref: DatabaseReference) {
+        if (!isAdded) return
+        AlertDialog.Builder(requireContext())
+            .setTitle("Step 4 of 4: App protection rules")
+            .setMessage("When ${child.name}'s screen time ends, which apps should be blocked?\n\n• Block all apps: Covers all non-system apps when time expires.\n• Choose apps: Select specific games/apps to limit.\n• Decide later: Time limits stay off until enabled in settings.")
+            .setPositiveButton("Block all apps") { _, _ ->
+                ref.child(child.id).updateChildren(
+                    mapOf(
+                        "restrictionsEnabled" to true,
+                        "blockEverything" to true
+                    )
+                )
+                Toast.makeText(
+                    requireContext(),
+                    "${child.name}'s profile is ready! You can adjust these rules anytime.",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+            .setNeutralButton("Choose apps") { _, _ ->
+                showAppRulesDialog(child, ref)
+            }
+            .setNegativeButton("Decide later") { _, _ ->
+                Toast.makeText(
+                    requireContext(),
+                    "${child.name}'s profile is ready! You can adjust these rules anytime.",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+            .show()
     }
 
     private fun cancelActiveCode() {

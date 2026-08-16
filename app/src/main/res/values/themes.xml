@@ -30,7 +30,7 @@
     </style>
     <style name="L2E.PairingDigit" parent="Widget.AppCompat.EditText">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">56dp</item>
+        <item name="android:layout_height">54dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:background">@drawable/bg_pairing_digit</item>
         <item name="android:gravity">center</item>
@@ -38,7 +38,9 @@
         <item name="android:maxLength">1</item>
         <item name="android:textColor">@color/l2e_ink</item>
         <item name="android:textColorHint">@color/l2e_muted</item>
-        <item name="android:textSize">20sp</item>
-        <item name="android:paddingBottom">8dp</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:padding">0dp</item>
     </style>
 </resources>

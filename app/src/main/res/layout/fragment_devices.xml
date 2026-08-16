@@ -5,37 +5,41 @@
     android:orientation="vertical"
     android:background="@color/l2e_canvas"
     android:paddingStart="20dp"
-    android:paddingTop="18dp"
+    android:paddingTop="16dp"
     android:paddingEnd="20dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="serif"
+        android:fontFamily="sans-serif-medium"
+        android:letterSpacing="-0.03"
         android:text="Your kids' devices"
         android:textColor="@color/l2e_ink"
-        android:textSize="30sp" />
+        android:textSize="28sp"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="Pair a device, then manage its focus from here."
+        android:layout_marginTop="2dp"
+        android:text="Pair a device, then manage its focus and limits."
         android:textColor="@color/l2e_muted"
-        android:textSize="15sp" />
+        android:textSize="14sp" />
 
     <Button
         android:id="@+id/btn_connect_child"
         style="@style/L2E.Button"
         android:layout_width="match_parent"
         android:layout_height="52dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/bg_btn_primary"
         android:backgroundTint="@null"
         android:drawableStart="@drawable/ic_child"
         android:drawableTint="@color/white"
         android:text="Connect a child"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold" />
 
     <FrameLayout
         android:id="@+id/ll_code_card"
@@ -49,21 +53,23 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@drawable/bg_bezel_outer"
-            android:padding="4dp">
+            android:padding="3dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@drawable/bg_surface_citrus"
+                android:background="@drawable/bg_surface_inner"
                 android:padding="18dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:letterSpacing="0.08"
                     android:text="PAIRING CODE"
                     android:textColor="@color/l2e_forest"
-                    android:textSize="12sp"
+                    android:textSize="11sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -72,11 +78,19 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:fontFamily="monospace"
-                    android:letterSpacing="0.12"
+                    android:letterSpacing="0.16"
                     android:text="--------"
                     android:textColor="@color/l2e_ink"
-                    android:textSize="28sp"
+                    android:textSize="30sp"
                     android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Enter this 6-character code on your child's phone."
+                    android:textColor="@color/l2e_muted"
+                    android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>
@@ -85,13 +99,14 @@
         android:id="@+id/btn_cancel_code"
         style="@style/L2E.Button"
         android:layout_width="wrap_content"
-        android:layout_height="44dp"
+        android:layout_height="40dp"
         android:layout_gravity="end"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="6dp"
         android:background="@drawable/bg_btn_secondary"
         android:backgroundTint="@null"
         android:text="Cancel code"
         android:textColor="@color/l2e_ink"
+        android:textSize="13sp"
         android:visibility="gone" />
 
     <TextView
@@ -99,22 +114,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
+        android:fontFamily="sans-serif-medium"
+        android:letterSpacing="0.08"
         android:text="CONNECTED DEVICES"
         android:textColor="@color/l2e_muted"
-        android:textSize="12sp"
+        android:textSize="11sp"
         android:textStyle="bold" />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="8dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_children"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
+            android:overScrollMode="never"
             android:paddingBottom="16dp" />
 
         <TextView
@@ -135,7 +153,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:padding="32dp"
-            android:text="Could not load connected devices. Check your connection and Firebase access."
+            android:text="Could not load connected devices. Check your connection."
             android:textColor="@color/l2e_danger"
             android:textSize="15sp"
             android:visibility="gone" />
@@ -162,7 +180,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:gravity="center"
-                android:text="Generate a pairing code to bring a child device into your circle."
+                android:text="Connect a child's device using the button above."
                 android:textColor="@color/l2e_muted"
                 android:textSize="14sp" />
         </LinearLayout>

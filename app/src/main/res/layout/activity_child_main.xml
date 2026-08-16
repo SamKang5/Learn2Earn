@@ -9,10 +9,10 @@
     <LinearLayout
         android:id="@+id/child_top_bar"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
+        android:layout_height="64dp"
         android:gravity="center_vertical"
         android:paddingStart="20dp"
-        android:paddingEnd="12dp">
+        android:paddingEnd="16dp">
 
         <TextView
             android:id="@+id/tv_child_app_title"
@@ -26,16 +26,18 @@
             android:text="Learn2Earn"
             android:contentDescription="Learn2Earn credits"
             android:textColor="@color/child_ink"
-            android:textSize="21sp" />
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
         <ImageButton
             android:id="@+id/btn_reset_role"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
             android:background="@drawable/bg_child_icon_tile"
             android:contentDescription="Switch user"
-            android:padding="12dp"
-            android:src="@drawable/ic_child_switch" />
+            android:padding="11dp"
+            android:src="@drawable/ic_child_switch"
+            app:tint="@color/child_accent" />
     </LinearLayout>
 
     <FrameLayout
@@ -59,47 +61,49 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:paddingTop="38dp"
+                android:paddingTop="36dp"
                 android:paddingBottom="32dp">
 
                 <FrameLayout
-                    android:layout_width="76dp"
-                    android:layout_height="76dp"
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
                     android:background="@drawable/bg_child_icon_tile"
-                    android:padding="21dp">
+                    android:padding="18dp">
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:contentDescription="@null"
-                        android:src="@drawable/ic_child_wallet" />
+                        android:src="@drawable/ic_child_wallet"
+                        app:tint="@color/child_accent" />
                 </FrameLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="22dp"
                     android:fontFamily="sans-serif-medium"
                     android:gravity="center"
                     android:letterSpacing="-0.03"
-                    android:text="Connect device"
+                    android:text="Connect Device"
                     android:textColor="@color/child_ink"
-                    android:textSize="32sp" />
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:layout_width="260dp"
+                    android:layout_width="270dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:gravity="center"
-                    android:text="Enter the six-character code from your parent."
+                    android:text="Enter the 6-character code from your parent's device."
                     android:textColor="@color/child_muted"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
 
                 <LinearLayout
                     android:id="@+id/ll_pairing_code_fields"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginTop="30dp"
                     android:orientation="horizontal">
 
                     <EditText android:id="@+id/pairing_digit_1" style="@style/L2E.PairingDigit" android:hint="L" />
@@ -114,12 +118,14 @@
                     android:id="@+id/btn_link"
                     style="@style/L2E.Button"
                     android:layout_width="match_parent"
-                    android:layout_height="58dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="24dp"
                     android:background="@drawable/bg_child_primary"
                     android:backgroundTint="@null"
                     android:text="Connect"
                     android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     app:icon="@drawable/ic_child_sync"
                     app:iconGravity="textStart"
                     app:iconTint="@color/white" />
@@ -147,56 +153,65 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingTop="2dp"
+                    android:paddingTop="4dp"
                     android:paddingBottom="28dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-medium"
-                        android:letterSpacing="-0.03"
-                        android:text="Wallet"
-                        android:textColor="@color/child_ink"
-                        android:textSize="32sp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="18dp"
+                        android:layout_marginTop="8dp"
                         android:background="@drawable/bg_child_balance"
-                        android:elevation="8dp"
+                        android:elevation="6dp"
                         android:orientation="vertical"
-                        android:padding="24dp">
+                        android:padding="22dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Total available"
-                            android:textColor="@color/child_on_dark_muted"
-                            android:textSize="13sp" />
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="sans-serif-medium"
+                                android:letterSpacing="0.08"
+                                android:text="TOTAL TIME AVAILABLE"
+                                android:textColor="@color/child_on_dark_muted"
+                                android:textSize="11sp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_child_wallet"
+                                app:tint="@color/child_accent" />
+                        </LinearLayout>
 
                         <TextView
                             android:id="@+id/tv_total_time"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
+                            android:layout_marginTop="8dp"
                             android:fontFamily="monospace"
                             android:letterSpacing="-0.04"
                             android:text="00:00:00"
                             android:textColor="@color/child_on_dark"
-                            android:textSize="40sp"
+                            android:textSize="38sp"
                             android:textStyle="bold" />
 
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginTop="22dp"
-                            android:background="#306C8D84" />
+                            android:layout_marginTop="18dp"
+                            android:background="#26FFFFFF" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="18dp"
+                            android:layout_marginTop="16dp"
                             android:orientation="horizontal">
 
                             <LinearLayout
@@ -208,7 +223,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Free today"
+                                    android:text="Daily Free"
                                     android:textColor="@color/child_on_dark_muted"
                                     android:textSize="12sp" />
 
@@ -216,11 +231,11 @@
                                     android:id="@+id/tv_free_time"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="4dp"
+                                    android:layout_marginTop="3dp"
                                     android:fontFamily="monospace"
                                     android:text="00:00:00"
                                     android:textColor="@color/child_on_dark"
-                                    android:textSize="20sp"
+                                    android:textSize="18sp"
                                     android:textStyle="bold" />
                             </LinearLayout>
 
@@ -241,11 +256,11 @@
                                     android:id="@+id/tv_time_bank"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="4dp"
+                                    android:layout_marginTop="3dp"
                                     android:fontFamily="monospace"
                                     android:text="00:00:00"
                                     android:textColor="@color/child_on_dark"
-                                    android:textSize="20sp"
+                                    android:textSize="18sp"
                                     android:textStyle="bold" />
                             </LinearLayout>
                         </LinearLayout>
@@ -254,10 +269,10 @@
                             android:id="@+id/tv_free_time_note"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="18dp"
+                            android:layout_marginTop="14dp"
                             android:text="Free time is used first."
                             android:textColor="@color/child_on_dark_muted"
-                            android:textSize="12sp" />
+                            android:textSize="11sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -265,22 +280,23 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:background="@drawable/bg_child_card"
-                        android:elevation="2dp"
+                        android:elevation="1dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:padding="16dp">
 
                         <FrameLayout
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
                             android:background="@drawable/bg_child_icon_tile"
-                            android:padding="12dp">
+                            android:padding="11dp">
 
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:contentDescription="@null"
-                                android:src="@drawable/ic_child_shield" />
+                                android:src="@drawable/ic_child_shield"
+                                app:tint="@color/child_accent" />
                         </FrameLayout>
 
                         <LinearLayout
@@ -297,13 +313,14 @@
                                 android:fontFamily="sans-serif-medium"
                                 android:text="Checking"
                                 android:textColor="@color/child_ink"
-                                android:textSize="16sp" />
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/tv_screentime_debug"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="3dp"
+                                android:layout_marginTop="2dp"
                                 android:ellipsize="end"
                                 android:maxLines="2"
                                 android:text="Timer paused in Learn2Earn."
@@ -315,37 +332,40 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp"
+                        android:layout_marginTop="22dp"
                         android:fontFamily="sans-serif-medium"
-                        android:text="Device"
-                        android:textColor="@color/child_ink"
-                        android:textSize="18sp" />
+                        android:letterSpacing="0.08"
+                        android:text="DEVICE"
+                        android:textColor="@color/child_muted"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_enable_protection"
                         style="@style/L2E.Button"
                         android:layout_width="match_parent"
-                        android:layout_height="54dp"
-                        android:layout_marginTop="12dp"
+                        android:layout_height="52dp"
+                        android:layout_marginTop="8dp"
                         android:background="@drawable/bg_child_secondary"
                         android:backgroundTint="@null"
                         android:gravity="start|center_vertical"
                         android:text="Protection"
                         android:textColor="@color/child_ink"
+                        android:textSize="14sp"
                         app:icon="@drawable/ic_child_shield"
                         app:iconGravity="textStart"
                         app:iconPadding="14dp"
-                        app:iconTint="@null" />
+                        app:iconTint="@color/child_accent" />
 
                     <TextView
                         android:id="@+id/tv_protection_status"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:layout_marginTop="6dp"
+                        android:layout_marginTop="4dp"
                         android:ellipsize="end"
                         android:maxLines="2"
-                        android:text="Checking protection"
+                        android:text="Checking protection..."
                         android:textColor="@color/child_muted"
                         android:textSize="12sp" />
 
@@ -353,24 +373,25 @@
                         android:id="@+id/btn_refresh_parent_apps"
                         style="@style/L2E.Button"
                         android:layout_width="match_parent"
-                        android:layout_height="54dp"
+                        android:layout_height="52dp"
                         android:layout_marginTop="12dp"
                         android:background="@drawable/bg_child_secondary"
                         android:backgroundTint="@null"
                         android:gravity="start|center_vertical"
-                        android:text="Sync apps"
+                        android:text="Sync Apps"
                         android:textColor="@color/child_ink"
+                        android:textSize="14sp"
                         app:icon="@drawable/ic_child_sync"
                         app:iconGravity="textStart"
                         app:iconPadding="14dp"
-                        app:iconTint="@null" />
+                        app:iconTint="@color/child_accent" />
 
                     <TextView
                         android:id="@+id/tv_app_sync_status"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:layout_marginTop="6dp"
+                        android:layout_marginTop="4dp"
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:text="Not synced yet"
@@ -390,9 +411,9 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/child_bottom_nav"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
+        android:layout_height="68dp"
         android:background="@color/child_surface"
-        android:elevation="12dp"
+        android:elevation="10dp"
         android:visibility="gone"
         app:itemActiveIndicatorStyle="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
         app:itemIconTint="@color/child_accent"
