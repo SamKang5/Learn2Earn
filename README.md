@@ -155,9 +155,12 @@ not treat it as a production security boundary.
 ## Credits
 
 Created by:
-
+FourSight:
 - [Đỗ Ngọc Thiên Bảo (elax)](https://elaxuwu.me/)
 - [Phạm Hoàng Khang](https://github.com/SamKang5)
+- Nguyễn Huỳnh Nhật Phương
+- Lê Hoàng Minh Quân
+- Lê Anh Duy (Mentor của FourSight tại sự kiện Build@HUB Hackathon 2026)
 
 ## License
 
